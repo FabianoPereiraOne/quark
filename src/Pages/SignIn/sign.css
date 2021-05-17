@@ -1,0 +1,101 @@
+.containerSign{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--black);
+}
+
+
+.containerSign .form{
+    width: 35rem;
+    height: 30rem;
+    background-color: var(--background);
+}
+
+.containerSign .form .form_title{
+    width: 100%;
+    height: 7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: var(--blue-dark);
+}
+
+.containerSign .form .form_title img{
+    max-width: 100%;
+    height: 5rem;
+    object-fit: cover;
+}
+
+.containerSign .form .form_body{
+    width: 100%;
+    height: calc(100% - 7rem);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.containerSign .form .form_body input,
+.containerSign .form .form_body button,
+.containerSign .form .form_body a{
+    display: block;
+}
+
+.containerSign .form .form_body input:first-of-type{
+    margin-top: 1rem;
+}
+
+.containerSign .form .form_body h2{
+    text-align: center;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.containerSign .form .form_body input{
+    height: 2.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 1rem;
+    
+    display: flex;
+    align-items: center;
+}
+
+.containerSign .form .form_body button{
+    height: 2.5rem;
+    background-color: var(--blue-dark);
+    border: none;
+    padding: 0.5rem;
+    text-align: center;
+    color: var(--white);
+    border-radius: 0.5rem;
+    
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+
+.containerSign .form .form_body a{
+    text-align: center;
+    margin-top: 0.5rem;
+    color: var(--black);
+    font-size: 1rem;
+}
+
+.containerSign .form .form_body a:hover{
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px){
+    
+    .containerSign .form{
+        width: 90%;
+    }
+}
