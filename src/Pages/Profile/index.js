@@ -11,7 +11,6 @@ import { toast } from 'react-toastify'
 export default function Profile(){
     const { user, loadUser, signOut, setUser, saveStorage, setLoadUser } = useContext(UserAuth)
     const [ nome, setNome ] = useState(user && user.nome)
-    const [ email, setEmail ] = useState(user && user.email)
     const [ avatarUrl, setAvatarUrl ] = useState(user && user.avatarUrl)
     const [ avatarUpload, setAvatarUpload ] = useState(null)
 
@@ -134,7 +133,7 @@ export default function Profile(){
                             <div className="form_group">
                                 <label>Email:</label>
                                 <input type="text" 
-                                value={ email }
+                                value={ user.email }
                                 disabled={ true }
                                 />
                             </div>

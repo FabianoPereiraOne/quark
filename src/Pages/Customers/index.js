@@ -4,12 +4,40 @@ import Title from '../../Components/Title'
 import './customers.css'
 import { FiUsers } from 'react-icons/fi'
 import { UserAuth } from '../../Contexts/user'
+import { toast } from 'react-toastify'
+import firebase from '../../Services/firebaseConection'
 
 export default function Customers(){
     const [ nomeFantasia, setNomeFantasia ] = useState('')
     const [ cnpj, setCnpj ] = useState('')
     const [ endereco, setEndereco ] = useState('')
-    const { loadUser } = useContext(UserAuth)
+    const { loadUser, setLoadUser } = useContext(UserAuth)
+
+    async function handleAdd(e){
+        e.preventDefault()
+
+        if(nomeFantasia !== '' && cnpj !== '' && endereco !== ''){
+
+            setLoadUser(true)
+            await firebase.firestore().collection("customers")
+            .add({
+                nomeFantasia,
+                cnpj,
+                endereco
+            })
+            .then(()=>{
+                setNomeFantasia('')
+                setCnpj('')
+                setEndereco('')
+                toast.success("Cliente cadastrado com sucesso!")
+                setLoadUser(false)
+            })
+
+
+        }else{
+            toast.error("Preencha todos os campos!")
+        }
+    }
 
     return(
         <div className="content_customers">
@@ -19,7 +47,7 @@ export default function Customers(){
                     <FiUsers/>
                 </Title>
                 <section className="section_clientes">
-                    <form>
+                    <form onSubmit={ handleAdd }>
                         <div className="form_altered">
                             <div className="form_group">
                                 <label>Nome fantasia:</label>

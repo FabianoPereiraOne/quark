@@ -20,7 +20,7 @@ function Header(){
                 }                
             </section>
             <section className="section_menu">
-                <Link to="/chamados">
+                <Link to="/">
                     <FiHome/>
                     <span>Chamados</span>
                 </Link>
