@@ -52,6 +52,8 @@
 
 .upload img{
     border-radius: 50%;
+    height: 12rem;
+    width: 12rem;
     object-fit: cover;
     max-width: 100%;
 }

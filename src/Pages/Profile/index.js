@@ -5,16 +5,101 @@ import { FiSettings, FiUpload } from 'react-icons/fi'
 import { useContext, useState } from 'react'
 import { UserAuth } from '../../Contexts/user'
 import avatar from '../../assets/avatar.png'
+import firebase from '../../Services/firebaseConection'
+import { toast } from 'react-toastify'
 
 export function Profile(){
-    const { user, loadUser, signOut } = useContext(UserAuth)
-    const [ nome, setNome ] = useState(user.nome)
+    const { user, loadUser, signOut, setUser, saveStorage, setLoadUser } = useContext(UserAuth)
+    const [ nome, setNome ] = useState(user && user.nome)
+    const [ email, setEmail ] = useState(user && user.email)
+    const [ avatarUrl, setAvatarUrl ] = useState(user && user.avatarUrl)
+    const [ avatarUpload, setAvatarUpload ] = useState(null)
 
-    function save(e){
+    async function upload(){
+        const uid = user.uid
+        
+        setLoadUser(true)
+        await firebase.storage()
+        .ref(`image/${ uid }/${ user.nome }`)
+        .put(avatarUpload)
+        .then( async()=>{
+            
+            await firebase.storage().ref(`image/${ uid }/${ user.nome }`).getDownloadURL()
+            .then( async(url)=>{
+                const imageUrl = url
+
+                await firebase.firestore().collection("users")
+                .doc(uid).update({
+                    avatarUrl: imageUrl,
+                    nome: nome
+                })
+                .then(()=>{
+                    let data = {
+                        ...user,
+                        avatarUrl: imageUrl,
+                        nome: nome
+                    }
+
+                    setUser(data)
+                    saveStorage(data)
+                    setLoadUser(false)
+                    toast.success("Dados atualizados com sucesso!")
+                })
+            })
+        })
+        .catch((erro)=>{
+            console.log(erro)
+            toast.error("Ops! Não foi possível atualizar foto de perfil")
+        })
+    }
+
+    function handleFile(e){
+
+        if(e.target.files[0]){
+            const image = e.target.files[0]
+
+            if(image.type === "image/png" || image.type === "image/jpeg"){
+
+                setAvatarUpload(image)
+                setAvatarUrl(URL.createObjectURL(e.target.files[0]))
+            }else{
+                toast.error("[ERRO] Tipo de imagem não suportada.")
+                setAvatarUpload(null)
+                return null
+            }
+            }
+    }
+
+    async function save(e){
         e.preventDefault()
 
-        if(nome !== ''){
-            alert("salvo")
+        if( avatarUpload === null && nome !== ''){
+            
+            setLoadUser(true)
+            await firebase.firestore().collection("users").doc(user.uid)
+            .update({
+                nome: nome
+            })
+            .then(()=>{
+
+                let data = {
+                    ...user,
+                    nome: nome
+                }
+
+                setUser(data)
+                saveStorage(data)
+                setLoadUser(false)
+            })
+            .catch((erro)=>{
+                console.log(erro)
+                toast.error("Ops! Falha ao atualizar nome")
+                setLoadUser(false)
+            })
+        }else if(avatarUpload !== null && nome !== ''){
+            upload()
+        }else if(avatarUpload !== null && nome === ''){
+            upload()
         }
     }
 
@@ -29,11 +114,11 @@ export function Profile(){
                     <form onSubmit={ save }>
                         <label className="upload">
                             <FiUpload/>
-                            <input type="file" accept="image/*"/>
+                            <input type="file" onChange={ handleFile } accept="image/*"/>
                             {
-                                user.avatarUrl 
+                                avatarUrl 
                                 ?
-                                <img src={ user.avatarUrl } alt="Imagem de perfil"/>
+                                <img src={ avatarUrl } alt="Imagem de perfil"/>
                                 :
                                 <img src={ avatar } alt="Imagem de perfil"/>
                             }   
@@ -49,8 +134,8 @@ export function Profile(){
                             <div className="form_group">
                                 <label>Email:</label>
                                 <input type="text" 
-                                value={ user.email }
-                                disabled='true'
+                                value={ email }
+                                disabled={ true }
                                 />
                             </div>
                             <button type="submit">{ loadUser ? "Salvando..." : "Salvar" }</button>

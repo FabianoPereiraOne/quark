@@ -65,7 +65,7 @@ function UserContent({ children }){
             const uid = value.user.uid
 
             const data = {
-                id: uid,
+                uid: uid,
                 nome: nome,
                 avatarUrl: null,
                 email: value.user.email
@@ -89,10 +89,7 @@ function UserContent({ children }){
     }
 
     async function signOut(){
-        setLoadUser(true)
-
         await firebase.auth().signOut()
-        setLoadUser(false)
         setUser(null)
         localStorage.removeItem('userAuth')
     }
@@ -110,7 +107,10 @@ function UserContent({ children }){
                     signed: !!user,
                     signUp,
                     signOut,
-                    signIn
+                    signIn,
+                    saveStorage,
+                    setUser,
+                    setLoadUser
                 }
             }>
             { children }
