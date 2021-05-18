@@ -24,7 +24,7 @@ function Header(){
                     <FiHome/>
                     <span>Chamados</span>
                 </Link>
-                <Link to="/clientes">
+                <Link to="/customers">
                     <FiUsers/>
                     <span>Clientes</span>
                 </Link>

@@ -20,7 +20,7 @@
   --red-orange: #F8856B;
 }
 
-body{
+body,:root, html{
   font-family: 'Roboto', sans-serif;
 }
 

@@ -154,9 +154,6 @@
     .content_profile{
         display: flex;
         flex-direction: column;
-
-        display: flex;
-        flex-direction: column;
     }
     
     .content_main{

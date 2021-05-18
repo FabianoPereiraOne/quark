@@ -8,7 +8,7 @@ import avatar from '../../assets/avatar.png'
 import firebase from '../../Services/firebaseConection'
 import { toast } from 'react-toastify'
 
-export function Profile(){
+export default function Profile(){
     const { user, loadUser, signOut, setUser, saveStorage, setLoadUser } = useContext(UserAuth)
     const [ nome, setNome ] = useState(user && user.nome)
     const [ email, setEmail ] = useState(user && user.email)
@@ -63,7 +63,7 @@ export function Profile(){
                 setAvatarUpload(image)
                 setAvatarUrl(URL.createObjectURL(e.target.files[0]))
             }else{
-                toast.error("[ERRO] Tipo de imagem não suportada.")
+                toast.error("Tipo de imagem não suportada.")
                 setAvatarUpload(null)
                 return null
             }
