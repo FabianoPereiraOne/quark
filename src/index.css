@@ -14,10 +14,13 @@
   --blue-dark: #181C2E;
   --black: #121212;
   --blue: #4B90F7;
-  --green: #8DCD8D;
-  --green-yellow: #9FCB3F;
-  --orange: #F9D093;
+  --green: #02a157;
+  --green-yellow: #5fd204;
+  --orange: #f3a32b;
   --red-orange: #F8856B;
+  --gray: #ddd;
+  --gray-black: rgb(121, 120, 120);
+  --yellow: rgb(203, 206, 19);
 }
 
 body,:root, html{
