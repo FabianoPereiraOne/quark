@@ -7,6 +7,7 @@ import SignUp from '../Pages/SignUp/index.js'
 import Dashboard from '../Pages/Dashboard/index.js'
 import Profile from '../Pages/Profile/index.js'
 import Customers from '../Pages/Customers/index.js'
+import New from '../Pages/New/index.js'
 
 function Router(){
 
@@ -17,6 +18,7 @@ function Router(){
             <Route exact path="/dashboard" component={ Dashboard } isPrivate/>
             <Route exact path="/profile" component={ Profile } isPrivate/>
             <Route exact path="/customers" component={ Customers } isPrivate/>
+            <Route exact path="/new" component={ New } isPrivate/>
         </Switch>
     )
 }
