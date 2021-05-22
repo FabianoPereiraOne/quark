@@ -142,7 +142,7 @@ export default function New(){
         }
 
         loadCustomers()
-    },[ id ])
+    },[ id, loadChamado ])
 
     async function loadChamado(lista){
 
