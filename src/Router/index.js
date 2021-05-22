@@ -8,6 +8,7 @@ import Dashboard from '../Pages/Dashboard/index.js'
 import Profile from '../Pages/Profile/index.js'
 import Customers from '../Pages/Customers/index.js'
 import New from '../Pages/New/index.js'
+import Erro from '../Pages/Erro/index.js'
 
 function Router(){
 
@@ -19,6 +20,8 @@ function Router(){
             <Route exact path="/profile" component={ Profile } isPrivate/>
             <Route exact path="/customers" component={ Customers } isPrivate/>
             <Route exact path="/new" component={ New } isPrivate/>
+            <Route exact path="/new/:id" component={ New } isPrivate/>
+            <Route  path="*" component={ Erro }/>
         </Switch>
     )
 }

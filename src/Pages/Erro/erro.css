@@ -1,0 +1,41 @@
+.container_erro{
+    width: 100%;
+    height: 100vh;
+    background-color: var(--background);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_erro svg{
+    font-size: 5rem;
+    margin: 1rem;
+    color: red;
+}
+
+.container_erro h1{
+    font-weight: bold;
+    text-align: center;
+}
+
+.container_erro a{
+    margin-top: 1rem;
+    border: 2px solid var(--black);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    color: var(--black);
+    transition: 0.5s ease;
+}
+
+.container_erro a:hover{
+    background-color: var(--black);
+    color: var(--white);
+}
+
+@media screen and (max-width: 400px){
+    .container_erro h1{
+        font-size: 1.5rem;
+    }
+}

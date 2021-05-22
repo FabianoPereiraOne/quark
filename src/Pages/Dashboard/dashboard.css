@@ -164,19 +164,37 @@
     vertical-align: middle;
 }
 
-.table_chamados tbody tr .content_badge div[data-situacao="aberto"]{
+.loading{
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+}
+
+div[data-situacao="Aberto"]{
     background-color: var(--green);
 }
 
-.table_chamados tbody tr .content_badge div[data-situacao="atendido"]{
+div[data-situacao="Atendido"]{
     background-color: var(--gray-black);
 }
 
-.table_chamados tbody tr .content_badge div[data-situacao="progress"]{
+div[data-situacao="Progresso"]{
     background-color: var(--yellow);
 }
 
-.content_btn button{
+.btn_searchPlus{
+    margin: 1rem;
+    width: 8rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 0.2rem;
+    color: var(--white);
+    background-color: var(--black);
+    font-size: 1.1rem;
+}
+
+.content_btn button,
+.content_btn a{
     padding: 0.5rem;
     text-align: center;
     vertical-align: middle;
@@ -193,8 +211,8 @@
     background-color: var(--blue)
 }
 
-.content_btn button.btn_edit{
-    background-color: var(--orange)
+.content_btn .btn_edit{
+    background-color: var(--orange);
 }
 
 
@@ -255,6 +273,16 @@
         content: attr(data-label);
         font-weight: 700;
     }
+
+    .btn_searchPlus{
+        margin: 1rem auto;
+    }
     
 
 }
+
+@media screen and (max-width:400px){
+    .section_chamados h2{
+        font-size: 1rem;
+    }
+}   

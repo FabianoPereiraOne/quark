@@ -4,11 +4,12 @@ import { useContext, useState, useEffect } from 'react'
 import { UserAuth } from '../../Contexts/user'
 import firebase from '../../Services/firebaseConection'
 import { toast } from 'react-toastify'
+import { useParams, useHistory } from 'react-router-dom'
 
 //==> Components
 import Header from '../../Components/Header'
 import Title from '../../Components/Title'
-import { FiPlusCircle } from 'react-icons/fi'
+import { FiPlusCircle, FiEdit2 } from 'react-icons/fi'
 
 
 
@@ -21,10 +22,40 @@ export default function New(){
     const [ loadCustomers, setLoadCustomers ] = useState(true)
     const [ customers, setCustomers ] = useState([])
     const [ customerSelected , setCustomerSelected ] = useState(0)
+    const [ isEdit, setIsEdit ] = useState(false)
+
+    const { id } = useParams()
+    const history = useHistory()
 
     async function handleChamados(e){
         e.preventDefault()
-        
+
+        // Se usuario que editar
+        if(isEdit){
+            await firebase.firestore().collection("chamados").doc(id)
+            .update({
+                assunto: assunto,
+                status: status,
+                complemento: complemento,
+                cliente: customers[customerSelected].nomeFantasia,
+                customerId: customers[customerSelected].id,
+                userId: user.uid,
+            })
+            .then(()=>{
+                setComplemento('')
+                setCustomerSelected(0)
+                toast.success("Chamado editado com sucesso!")
+
+                history.push("/dashboard")
+            })
+            .catch((erro)=>{
+                toast.error("Falha ao editar chamado!")
+                console.log(erro)
+            })
+
+            return
+        }
+
         setLoadRegister(true)
         await firebase.firestore().collection("chamados")
         .add({
@@ -33,7 +64,8 @@ export default function New(){
             complemento: complemento,
             cliente: customers[customerSelected].nomeFantasia,
             customerId: customers[customerSelected].id,
-            userId: user.uid
+            userId: user.uid,
+            created: new Date()
         })
         .then(()=>{
             setComplemento("")
@@ -94,6 +126,11 @@ export default function New(){
 
                 setCustomers(lista)
                 setLoadCustomers(false)
+
+                 // Se usuario quer editar
+                if(id){
+                    loadChamado(lista)
+                }
             })
             .catch((erro)=>{
                 console.log(erro)
@@ -105,15 +142,41 @@ export default function New(){
         }
 
         loadCustomers()
-    },[])
+    },[ id ])
+
+    async function loadChamado(lista){
+
+        await firebase.firestore().collection("chamados").doc(id)
+        .get()
+        .then((snapshot)=>{
+            setAssunto(snapshot.data().assunto)
+            setStatus(snapshot.data().status)
+            setComplemento(snapshot.data().complemento)
+
+            let index = lista.findIndex( item => item.id === snapshot.data().customerId)
+            setCustomerSelected(index)
+            setIsEdit(true)
+        })
+        .catch((erro)=>{
+            console.log(erro)
+            toast.error("Nao existe esse chamado! Tente criar um.")
+            setIsEdit(false)
+        })
+    }
 
     return(
         <div className="content_new">
             <Header/>
             <div className="content_main_new">
-                <Title name="Novo chamado">
-                    <FiPlusCircle/>
-                </Title>
+                { isEdit ? (
+                    <Title name="Editando chamado">
+                        <FiEdit2/>
+                    </Title>
+                ) : (
+                    <Title name="Novo chamado">
+                        <FiPlusCircle/>
+                    </Title>
+                )}
 
                 <section className="section_new">
                     <form onSubmit={ handleChamados }>
