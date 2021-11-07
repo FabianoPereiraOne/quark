@@ -142,7 +142,8 @@ export default function New(){
         }
 
         loadCustomers()
-    },[ id, loadChamado ])
+        // eslint-disable-next-line
+    },[ id ])
 
     async function loadChamado(lista){
 
