@@ -58,7 +58,6 @@ function UserContent({ children }){
 
     //==> Cadastrar usuario
     async function signUp(nome, email, senha){
-
         setLoadUser(true)
         await firebase.auth().createUserWithEmailAndPassword(email, senha)
         .then( async(value)=>{
@@ -82,8 +81,9 @@ function UserContent({ children }){
             setLoadUser(false)
             toast.success(`Bem vindo a plataforma ${ nome }!`)
         })
-        .catch((erro)=>{
+        .catch((error)=>{
             toast.error("Ops! Algo deu errado.")
+            console.log(error)
             setLoadUser(false)
         })
     }
